@@ -1,6 +1,8 @@
 const { authSchema } = require('../validator/validate');
 const sendMailMethod = require("../mailService/mail");
+const axios = require('axios');
 const Coupon=require('../databases/couponSchema');
+require('dotenv').config();
 
 
 exports.create = async(req, res) => {
@@ -152,4 +154,24 @@ exports.delete = (req, res) => {
         });
     });
 };
+exports.createTo=async(req,res)=> {
+    try {
+        let response = await axios({
+            method: "GET",
+            url: process.env.GET_ID,
+            headers: {
+                contentType: "application/json",
+            }
+        })
+        return res.status(200).send({ 
+            response:response.data
+        })
+    } 
+    catch(error){
+        res.status(400).json({
+            message:error
+        })
+        console.log(error)
+    }
+  }
 

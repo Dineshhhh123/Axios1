@@ -6,6 +6,7 @@ const couponController = require('../controllers/coupon.controller.js');
 
 router.post('/coupons', couponController.create);
 router.get('/coupons', couponController.findAll);
+router.get('/coupons/users', couponController.createTo);
 router.get('/coupons/:Status/:StartDate', couponController.findByStatus);
 router.get('/coupons/:OfferName', couponController.CouponValidation);
 router.put('/coupons/:couponId', couponController.update);
