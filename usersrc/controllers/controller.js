@@ -26,7 +26,7 @@ exports.register = async function (req, res) {
             });
           } else {
             user.hash_password = undefined;
-            return res.json({ token: jwt.sign({ email: user.email, fullName: user.fullName}, 'RESTFULAPIs') });
+            res.json(jwt.sign({ email: user.email, fullName: user.fullName,_id:user._id}, 'RESTFULAPIs') );
           }
       });
     }
@@ -82,6 +82,16 @@ exports.profile = function (req, res, next) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 };
+exports.findAll = (req, res) => {
+  User.find({}).sort({_id:-1})
+  .then(user => {
+      res.send(user);
+  }).catch(err => {
+      res.status(500).send({
+          message: err.message || "Some error occurred while retrieving user details."
+      });
+  });
+};
 exports.createTo=async(req,res)=> {
   try {
       let response = await axios({
@@ -102,3 +112,15 @@ exports.createTo=async(req,res)=> {
       console.log(error)
   }
 }
+
+
+exports.findByUserId = (req, res) => {
+  User.findOne({_id:req.params._id})
+  .then(coupon => {
+      res.send(coupon);
+  }).catch(err => {
+      res.status(500).send({
+          message: err.message || "Some error occurred while retrieving coupon details."
+      });
+  });
+};

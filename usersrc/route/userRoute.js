@@ -6,5 +6,6 @@ const couponController = require('../controllers/controller.js');
 
 router.post('/register', couponController.register);
 router.post('/login', couponController.sign_in);
-router.get('/coupons', couponController.createTo);
+router.get('/users', couponController.findAll);
+router.get('/users/:_id', couponController.findByUserId);
 module.exports = router;
